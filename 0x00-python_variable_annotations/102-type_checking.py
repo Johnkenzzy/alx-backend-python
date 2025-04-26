@@ -12,8 +12,8 @@ def zoom_array(lst: Sequence[Any], factor: int = 2) -> List[Any]:
     return zoomed_in
 
 
-array = [12, 72, 91]
+array: List[int] = [12, 72, 91]
 
-zoom_2x = zoom_array(array)
+zoom_2x: List[int] = zoom_array(array)
 
-zoom_3x = zoom_array(array, 3)  # Fixed: pass an int, not a float
+zoom_3x: List[int] = zoom_array(array, 3)  # Fixed: pass an int, not a float
