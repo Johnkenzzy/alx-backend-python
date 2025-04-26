@@ -7,7 +7,7 @@ def zoom_array(lst: Sequence[Any], factor: int = 2) -> List[Any]:
     """Return the appropiate collection type"""
     zoomed_in: List[Any] = [
         item for item in lst
-        for i in range(factor)
+        for _ in range(factor)
     ]
     return zoomed_in
 
