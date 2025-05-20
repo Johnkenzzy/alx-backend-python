@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
-"""Defines the TestAccessNestedMap subclass of Unittest.TestCase
+"""Defines the TestAccessNestedMap,
+TestGetJson subclasses of Unittest.TestCase
 """
 
 import unittest
+from unittest.mock import patch, Mock
 from parameterized import parameterized
-from typing import Any, Mapping, Tuple, Type
+from typing import Any, Mapping, Tuple, Type, Dict
 
-from utils import access_nested_map
+from utils import access_nested_map, get_json
 
 
 class TestAccessNestedMap(unittest.TestCase):
@@ -51,3 +53,28 @@ class TestAccessNestedMap(unittest.TestCase):
                 nested_map,
                 path
             )
+
+
+class TestGetJson(unittest.TestCase):
+    """Defines test cases for `get_json`
+    """
+    @parameterized.expand([
+        ("http://example.com", {"payload": True}),
+        ("http://holberton.io", {"payload": False})
+    ])
+    @patch("requests.get")
+    def test_get_json(
+        self,
+        url: str,
+        expected: Dict,
+        mock_get: Mock
+    ) -> None:
+        """Test get_json
+        """
+        mock_response = Mock()
+        mock_response.json.return_value = expected
+        mock_get.return_value = mock_response
+
+        result = get_json(url)
+        self.assertEqual(result, expected)
+        mock_get.assert_called_once_with(url)
