@@ -87,7 +87,14 @@ class TestGetJson(unittest.TestCase):
 class TestMemozie(unittest.TestCase):
     """Test class for `memoize`
     """
-    def test_memoize(self) -> None:
+    @parameterized.expand([
+        ("basic_memoize_test", 42)
+    ])
+    def test_memoize(
+        self,
+        name: str,
+        expected: int
+    ) -> None:
         """Tests memoization
         """
         class TestClass:
@@ -110,8 +117,8 @@ class TestMemozie(unittest.TestCase):
             result2: int = test_obj.a_property
 
             # Check that the property returns the expected value
-            self.assertEqual(result1, 42)
-            self.assertEqual(result2, 42)
+            self.assertEqual(result1, expected)
+            self.assertEqual(result2, expected)
 
             # Check that a_method was called only once due to memoization
             mock_method.assert_called_once()
