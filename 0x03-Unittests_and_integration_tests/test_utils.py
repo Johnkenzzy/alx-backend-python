@@ -6,7 +6,7 @@ TestGetJson subclasses of Unittest.TestCase
 import unittest
 from unittest.mock import patch, Mock
 from parameterized import parameterized
-from typing import Any, Mapping, Tuple, Type, Dict
+from typing import Any, Mapping, Tuple, Dict
 
 from utils import access_nested_map, get_json
 
@@ -37,22 +37,26 @@ class TestAccessNestedMap(unittest.TestCase):
         )
 
     @parameterized.expand([
-        ({}, ("a",), KeyError),
-        ({"a": 1}, ("a", "b"), KeyError)
+        ({}, ("a",), "'a'"),
+        ({"a": 1}, ("a", "b"), "'b'")
     ])
     def test_nested_map_exception(
         self,
         nested_map: Mapping[str, Any],
         path: Tuple[str, ...],
-        expected: Type[BaseException]
+        expected: str
     ) -> None:
-        """Test that access_nested_map raises KeyError when appropriate.
+        """Test that access_nested_map raises KeyError with expected message.
         """
-        with self.assertRaises(expected):
+        with self.assertRaises(KeyError) as cm:
             access_nested_map(
                 nested_map,
                 path
             )
+        self.assertEqual(
+            str(cm.exception),
+            expected
+        )
 
 
 class TestGetJson(unittest.TestCase):
