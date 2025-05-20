@@ -87,27 +87,27 @@ class TestGetJson(unittest.TestCase):
 class TestMemozie(unittest.TestCase):
     """Test class for `memoize`
     """
-    def test_memoize(self):
-        """Tests memoize
+    def test_memoize(self) -> None:
+        """Tests memoization
         """
         class TestClass:
 
-            def a_method(self):
+            def a_method(self) -> int:
                 return 42
 
             @memoize
-            def a_property(self):
+            def a_property(self) -> int:
                 return self.a_method()
 
-        test_obj = TestClass()
+        test_obj: TestClass = TestClass()
         with patch.object(
             test_obj,
             'a_method',
             wraps=test_obj.a_method
         ) as mock_method:
             # Call the property twice
-            result1 = test_obj.a_property
-            result2 = test_obj.a_property
+            result1: int = test_obj.a_property
+            result2: int = test_obj.a_property
 
             # Check that the property returns the expected value
             self.assertEqual(result1, 42)
