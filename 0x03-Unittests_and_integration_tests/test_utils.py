@@ -84,7 +84,7 @@ class TestGetJson(unittest.TestCase):
         mock_get.assert_called_once_with(url)
 
 
-class TestMemozie(unittest.TestCase):
+class TestMemoize(unittest.TestCase):
     """Test class for `memoize`
     """
     @parameterized.expand([
@@ -120,5 +120,5 @@ class TestMemozie(unittest.TestCase):
             self.assertEqual(result1, expected)
             self.assertEqual(result2, expected)
 
-            # Check that a_method was called only once due to memoization
-            mock_method.assert_called_once()
+            # Assert a_method was called only once (memoization working)
+            mocked_method.assert_called_once()
